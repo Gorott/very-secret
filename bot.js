@@ -1,12 +1,15 @@
 require("dotenv").config();
+
+const mongo = require('./db')
 const { Collection, Client, Discord } = require("discord.js");
 const fs = require("fs");
 const client = new Client({
   disableEveryone: true,
   intents: 32767,
 });
+client.db = mongo;
 
-const token = process.env.token;
+
 client.commands = new Collection();
 fs.readdir("./commands/", (err, files) => {
   files.forEach((file) => {
@@ -38,7 +41,7 @@ for (const file of eventFiles) {
   require(`./events/${file}`)(client);
 }
 
-client.login(token);
+client.login(process.env.token);
 
 client.on("error", (e) => console.error);
 
