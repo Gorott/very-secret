@@ -17,6 +17,9 @@ module.exports = (client) => {
         (command) => command.aliases && command.aliases.includes(cmd)
       );
     if (!command) return;
+    
+    
+
 
     await command.run(message, args, client)?.catch((error) => {
       console.error(error);
