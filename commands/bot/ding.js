@@ -29,7 +29,8 @@ module.exports = {
     if (genres.includes(genre)) {
       fs.readdir(process.cwd() + `/music/${genre}`, (err, files) => {
         shuffle(files)
-            const connection = joinVoiceChannel({
+        console.log(files)
+        const connection = joinVoiceChannel({
       channelId: interaction.member.voice.channel.id,
       guildId: interaction.guild.id,
       adapterCreator: interaction.guild.voiceAdapterCreator,
@@ -41,7 +42,7 @@ module.exports = {
     const subscription = connection.subscribe(player)
     player.play(resource)
     data.playing = true
-    data.queue = files.shift()
+    data.queue = files.pop()
     data.save()
     player.on('error', err => {
       console.error(err.message)
