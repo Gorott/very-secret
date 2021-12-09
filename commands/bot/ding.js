@@ -15,28 +15,27 @@ module.exports = {
             choices: [
               { name: "rock", value: "Rock" },
               { name: "alternative", value: "Alternative" },
-              { name: "r&b", value: "R&B" }
+              { name: "r&b", value: "R&B" },
+              { name: "dancepop", value: "Dancepop" },
               ]
           }]
     },
   run: async (interaction, client) => {
     let genre = interaction.options.getString("genre")
-    console.log(genre)
-    genres = ['Rock', 'Alternative', 'R&B']
+    genres = ['Rock', 'Alternative', 'R&B', 'Dancepop']
     let data = await guild.findOne({ guild: interaction.guild.id })
     if (!interaction.member.voice.channel) return interaction.reply({ content: `You have to be in a voice channel to play Guess The Song!`, ephemeral: true })
     if (data.playing == true)  return interaction.reply({ content: `Guess the song is already being played in your server.`, ephemeral: true })
     if (genres.includes(genre)) {
-      fs.readdir(process.cwd() + `/music/${genre}`, (err, files) => {
+      fs.readdir(process.cwd() + `/music/Random`, (err, files) => {
         shuffle(files)
-        console.log(files)
         const connection = joinVoiceChannel({
       channelId: interaction.member.voice.channel.id,
       guildId: interaction.guild.id,
       adapterCreator: interaction.guild.voiceAdapterCreator,
     })
     const player = createAudioPlayer()
-    const resource = createAudioResource(process.cwd() + `/music/${genre}/${files[0]}`, {
+    const resource = createAudioResource(process.cwd() + `/music/Random/${files[0]}`, {
       inputType: StreamType.Arbitrary
     })
     const subscription = connection.subscribe(player)
