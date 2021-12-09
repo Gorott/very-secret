@@ -1,7 +1,6 @@
 {
   "name": "very-secret",
   "version": "1.0.0",
-  "description": "",
   "main": "bot.js",
   "dependencies": {
     "@discordjs/opus": "^0.7.0",
@@ -13,7 +12,8 @@
     "tweetnacl": "^1.0.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,9 @@
   "bugs": {
     "url": "https://github.com/Gorott/very-secret/issues"
   },
-  "homepage": "https://github.com/Gorott/very-secret#readme"
+  "homepage": "https://github.com/Gorott/very-secret#readme",
+  "devDependencies": {
+    "node": "^16.13.1"
+  },
+  "description": ""
 }
