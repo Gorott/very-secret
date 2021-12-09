@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
-const { profile, guild } = require("../db");
+const { guild } = require("../db");
 const prefix = process.env.prefix;
+
 
 module.exports = (client) => {
   client.on("messageCreate", async (message) => {
@@ -8,6 +9,9 @@ module.exports = (client) => {
     if (!message.player)
     if (message.channel.type == "dm") return;
     if (!message.content.startsWith(prefix)) return;
+    
+    message.dbGuild = await guild.findOne({ guild: message.guild.id }).exec()
+        if (!message.dbGuild) message.dbGuild = await guild.create({ guild: message.guild.id })
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();

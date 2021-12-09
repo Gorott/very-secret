@@ -4,6 +4,9 @@ module.exports = (client) => {
     client.on("interactionCreate", async (interaction) => {
         if (!interaction.isCommand()) return
         let commandFile = client.slashCommands.get(interaction.commandName)
+        
+        interaction.dbGuild = await guild.findOne({ guild: interaction.guild.id }).exec()
+        if (!interaction.dbGuild) interaction.dbGuild = await guild.create({ guild: interaction.guild.id })
 
         if (!cooldowns.has(commandFile.name)) {
             cooldowns.set(commandFile.name, new Collection())
