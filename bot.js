@@ -9,7 +9,7 @@ const client = new Client({
 });
 client.db = mongo;
 
-client.slashCommands = new Collection()
+client.commands = new Discord.Collection()
 fs.readdir("./commands/", (err, files) => {
     files.forEach((file) => {
         let path = `./commands/${file}`
@@ -17,13 +17,15 @@ fs.readdir("./commands/", (err, files) => {
             if (err) console.error(err)
             let jsfile = files.filter((f) => f.split(".").pop() === "js")
             if (jsfile.length <= 0) {
-                console.error(`Couldn't find slash commands in the ${file} category.`)
+                console.error(`Couldn't find commands in the ${file} category.`)
+                return
             }
             jsfile.forEach((f, i) => {
                 let props = require(`./commands/${file}/${f}`)
                 props.category = file
                 try {
-                    client.slashCommands.set(props.command.name, props)
+                    client.commands.set(props.name, props)
+                    if (props.aliases) props.aliases.forEach((alias) => client.commands.set(alias, props))
                 } catch (err) {
                     if (err) console.error(err)
                 }

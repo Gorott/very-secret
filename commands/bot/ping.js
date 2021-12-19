@@ -1,9 +1,9 @@
 module.exports = {
-  command: {
-        name: "ping",
-        description: "Replies with bot ping."
+    name: "ping",
+    description: "Replies with bot ping.",
+    usage: `${process.env.PREFIX}ping`,
+    aliases: ["heartbeat", "response"],
+    run: async (message, args) => {
+        message.channel.send(`Ping! ${Math.ceil(message.client.ws.ping)} ms.`)
     },
-  run: async (interaction, client) => {
-        interaction.reply(`Ping! ${Math.ceil(interaction.client.ws.ping)} ms.`)
-  }
-};
+}
